@@ -8,6 +8,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  if (!adminAuth) {
+    return NextResponse.json({ error: "Firebase not configured" }, { status: 500 });
+  }
+
   const idToken = authorization.split("Bearer ")[1];
 
   await adminAuth.verifyIdToken(idToken, true);
